@@ -2,7 +2,7 @@ import React , {Component } from 'react';
 import {TodoCreator} from './TodoCreator';
 import {TodoRow} from './TodoRow';
 import {TodoBanner} from './TodoBanner';
-import {visibilityControl} from './visibilityControl';
+import {  VisibilityControl } from './VisibilityControl';
 
 
 class App extends Component 
@@ -45,7 +45,7 @@ class App extends Component
                   </table>
 
                   <div className="bg-seconadry text-white text-center p-2">
-                    <visibilityControl   description = "Completed Tasks"
+                    <VisibilityControl   description = "Completed Tasks"
                                          isChecked = { this.state.showCompleted}
                                          callback = { (checked) => 
                                           this.setState({ showCompleted : checked })}
