@@ -2,6 +2,7 @@ import React , {Component } from 'react';
 import {TodoCreator} from './TodoCreator';
 import {TodoRow} from './TodoRow';
 import {TodoBanner} from './TodoBanner';
+import {visibilityControl} from './visibilityControl';
 
 
 class App extends Component 
@@ -12,7 +13,7 @@ class App extends Component
         this.state ={
           userName : "Darwish",
           todoItems : [{action:'ABC', done: false}, {action:'Workout', done: true}, {action:'Study', done:true}],
-          //  newItem : " "
+          showCompleted : true
         }
         
       }
@@ -40,8 +41,35 @@ class App extends Component
                             <td>Status</td>
                           </tr>
                         </thead>
-                        <tbody>  {this.todoTableRows() }    </tbody>
+                        <tbody>  {this.todoTableRows(false) }    </tbody>
                   </table>
+
+                  <div className="bg-seconadry text-white text-center p-2">
+                    <visibilityControl   description = "Completed Tasks"
+                                         isChecked = { this.state.showCompleted}
+                                         callback = { (checked) => 
+                                          this.setState({ showCompleted : checked })}
+                    />
+
+                  </div>
+
+                  {
+                    this.state.showCompleted && 
+                    <table className="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <td>Description</td>
+                          <td>Done</td>
+                        </tr>
+                      </thead>
+                      <tbody>  {this.todoTableRows(true) }    </tbody>
+                    </table>
+
+
+
+                  }
+
+
 
                 </div>
                 </div>
@@ -78,8 +106,12 @@ class App extends Component
 
 
                       
-      todoTableRows = () => this.state.todoItems.map(item =>
-                            <TodoRow key={item.action} item={item} callback={this.toggeltodo}  /> );
+      todoTableRows = (doneValues ) => 
+                  this.state.todoItems
+                  .filter( t=> t.done === doneValues)
+                  .map(item => <TodoRow key={item.action} 
+                                        item={item} 
+                                        callback={this.toggeltodo}  /> );
 
 
     
